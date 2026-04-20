@@ -74,6 +74,8 @@ async def help_menu_callback(client: Client, callback_query: CallbackQuery):
         "   - Note: Private Facebook videos cannot be downloaded.\n\n"
         "➢ <b>/pin [Video URL]</b> - Download a Pinterest video.\n"
         "   - Example: <code>/pin https://pin.it/6GoDMRwmE</code> (Downloads the specified Pinterest video)\n\n"
+        "➢ <b>/ig [Video URL]</b> - Download an Instagram video/reel. \n"
+        "    - Example: /ig https://www.instagram.com/reel/XXXXXXX/ (Downloads the specified Instagram video)\n\n"
         "   - Note: 18+ Instagram Reels cannot be downloaded.\n\n"
         "➢ <b>/sp [Track URL]</b> - Download a Spotify track.\n"
         "   - Example: <code>/sp https://open.spotify.com/track/7ouBSPZKQpm7zQz2leJXta</code> (Downloads the specified Spotify track)\n\n"
