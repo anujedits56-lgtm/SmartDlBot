@@ -66,7 +66,7 @@ async def send_start_message(client, message):
     await message.reply_photo(
     photo=photo_url,
     caption=start_message,
-        parse_mode=ParseMode.HTML,
+    parse_mode=ParseMode.HTML,
         reply_markup=InlineKeyboardMarkup([
             [InlineKeyboardButton("⚙️ Help", callback_data="help_menu"),
              InlineKeyboardButton("➕ Add Me", url="https://t.me/social_media_downloader_ak_bot?startgroup=new&admin=post_messages+delete_messages+edit_messages+pin_messages+change_info+invite_users+promote_members")],
