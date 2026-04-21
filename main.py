@@ -24,18 +24,19 @@ from adminpanel.logs.logs import setup_logs_handler
 
 web_app = Flask(__name__)
 
-@web_app.route("/")
-def home():
-    return "Bot is running!"
+# Setup minimal Flask server to prevent Heroku R10 error
+flask_app = Flask(__name__)
 
-def run_web():
-    web_app.run(
-        host="0.0.0.0",
-        port=int(os.environ.get("PORT", 5000)),
-        debug=False,
-        use_reloader=False   # 🔥 ye hi fix hai
-    )
+@flask_app.route('/')
+def index():
+    return "Smart Tool Bot is running!"
 
+def run_flask():
+    port = int(os.environ.get("PORT", 5000))
+    flask_app.run(host="0.0.0.0", port=port)
+
+# Start Flask in background
+Thread(target=run_flask).start()
 
 # ------------------- PYROGRAM BOT -------------------
 
