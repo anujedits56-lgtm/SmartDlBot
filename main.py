@@ -25,7 +25,12 @@ def home():
     return "Bot is running!"
 
 def run_web():
-    web_app.run(host="0.0.0.0", port=int(os.environ.get("PORT", 5000)))
+    web_app.run(
+        host="0.0.0.0",
+        port=int(os.environ.get("PORT", 5000)),
+        debug=False,
+        use_reloader=False   # 🔥 ye hi fix hai
+    )
 
 
 # ------------------- PYROGRAM BOT -------------------
