@@ -7,120 +7,48 @@ from flask import Flask
 import os
 
 from config import API_ID, API_HASH, BOT_TOKEN
-from format import build_quality_ui
-from youtube.youtube import download_video_sync, download_audio_sync
+
+# Import handlers
+from youtube.youtube import setup_downloader_handler
+from pinterest.pinterest import setup_pinterest_handler
+from facebook.facebook import setup_dl_handlers
+from spotify.spotify import setup_spotify_handler
+from instagram.instagram import setup_ig_handlers
+from tiktok.tiktok import setup_tt_handler
+from adminpanel.restart.restart import setup_restart_handler
+from adminpanel.admin.admin import setup_admin_handler
+from adminpanel.logs.logs import setup_logs_handler
 
 
-# ---------------- FLASK SERVER ----------------
+# ------------------- FLASK SERVER -------------------
+
 flask_app = Flask(__name__)
 
-@flask_app.route("/")
-def home():
-    return "Smart Tool Bot Running 🚀"
+@flask_app.route('/')
+def index():
+    return "Smart Tool Bot is running!"
 
 def run_flask():
-    port = int(os.getenv("PORT", 5000))
-    flask_app.run(host="0.0.0.0", port=port, debug=False, use_reloader=False)
+    port = int(os.environ.get("PORT", 5000))
+    flask_app.run(
+        host="0.0.0.0",
+        port=port,
+        debug=False,
+        use_reloader=False  # VERY IMPORTANT
+    )
 
+# Run Flask in background (daemon thread)
 Thread(target=run_flask, daemon=True).start()
 
+# ------------------- PYROGRAM BOT -------------------
 
-# ---------------- BOT ----------------
 app = Client(
     "bot",
     api_id=API_ID,
     api_hash=API_HASH,
-    bot_token=BOT_TOKEN
+    bot_token=BOT_TOKEN 
 )
 
-from handlers.downloader import setup_downloader_handler
-from handlers.pinterest import setup_pinterest_handler
-from handlers.dl import setup_dl_handlers
-from handlers.spotify import setup_spotify_handler
-from handlers.instagram import setup_ig_handlers
-from handlers.restart import setup_restart_handler
-from handlers.admin import setup_admin_handler
-from handlers.logs import setup_logs_handler
-from handlers.tiktok import setup_tt_handler
-
-# ---------------- LINK HANDLER ----------------
-@app.on_message(filters.regex(r"^(https?://).+"))
-async def link_handler(client, message):
-    url = message.text.strip()
-    try:
-        await message.reply_text(
-            "📥 Select Quality 👇",
-            reply_markup=build_quality_ui(url)
-        )
-    except:
-        await message.reply_text("❌ Unsupported Link")
-
-
-# ---------------- CALLBACK HANDLER ----------------
-@app.on_callback_query()
-async def callback_handler(client, callback_query: CallbackQuery):
-    data = callback_query.data
-    await callback_query.answer()
-
-    try:
-        parts = data.split("|")
-        action = parts[0]
-        url = parts[1]
-        quality = parts[2] if len(parts) > 2 else None
-
-        # -------- VIDEO --------
-        if action == "vid":
-            await callback_query.message.edit_text("📥 Downloading Video...")
-
-            result = download_video_sync(url, quality)
-            if not result:
-                return await callback_query.message.edit_text("❌ Failed")
-
-            await client.send_video(
-                chat_id=callback_query.message.chat.id,
-                video=result["file_path"],
-                caption="🎬 Download Complete"
-            )
-
-            os.remove(result["file_path"])
-
-
-        # -------- AUDIO --------
-        elif action == "audio":
-            await callback_query.message.edit_text("🎵 Downloading Audio...")
-
-            result = download_audio_sync(url)
-            if not result:
-                return await callback_query.message.edit_text("❌ Failed")
-
-            await client.send_audio(
-                chat_id=callback_query.message.chat.id,
-                audio=result["file_path"],
-                caption="🎵 Audio Ready"
-            )
-
-            os.remove(result["file_path"])
-
-
-        # -------- BEST QUALITY --------
-        elif action == "fast":
-            await callback_query.message.edit_text("⚡ Getting Best Quality...")
-
-            result = download_video_sync(url)
-            if not result:
-                return await callback_query.message.edit_text("❌ Failed")
-
-            await client.send_video(
-                chat_id=callback_query.message.chat.id,
-                video=result["file_path"],
-                caption="⚡ Best Quality Downloaded"
-            )
-
-            os.remove(result["file_path"])
-
-    except Exception:
-        await callback_query.message.edit_text("❌ Error Occurred")
-        
 # Setup handlers
 setup_downloader_handler(app)
 setup_pinterest_handler(app)
@@ -328,15 +256,15 @@ async def back(client, query: CallbackQuery):
     await query.answer()
 
     await query.message.edit_text(
-    "<b>Send me any link to download 🚀</b>",
-    parse_mode=ParseMode.HTML,
-    reply_markup=InlineKeyboardMarkup([
-        [
-            InlineKeyboardButton("⚙️ Help", callback_data="help_menu"),
-            InlineKeyboardButton("ℹ️ About", callback_data="about_me")
-        ]
+        "<b>Send me any link to download 🚀</b>",
+        parse_mode=ParseMode.HTML,
+        reply_markup=InlineKeyboardMarkup([
+            [
+                InlineKeyboardButton("⚙️ Help", callback_data="help_menu"),
+                InlineKeyboardButton("ℹ️ About", callback_data="about_me")
+            ]
     ]),
-    disable_web_page_preview=True
+    disable_web_page_preview=True,
 )
 
 # Final confirmation that the bot has started
