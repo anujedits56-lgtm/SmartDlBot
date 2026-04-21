@@ -14,6 +14,10 @@ from pinterest.pinterest import setup_pinterest_handler
 from facebook.facebook import setup_dl_handlers
 from spotify.spotify import setup_spotify_handler
 from instagram.instagram import setup_ig_handlers
+from tiktok.tiktok import setup_tt_handler
+from adminpanel.restart.restart import setup_restart_handler
+from adminpanel.admin.admin import setup_admin_handler
+from adminpanel.logs.logs import setup_logs_handler
 
 
 # ------------------- FLASK SERVER -------------------
@@ -48,6 +52,10 @@ setup_pinterest_handler(app)
 setup_dl_handlers(app)
 setup_spotify_handler(app)
 setup_ig_handlers(app)
+setup_restart_handler(app)
+setup_admin_handler(app)
+setup_logs_handler(app)
+setup_tt_handler(app)
 
 
 # ------------------- START -------------------
@@ -120,6 +128,9 @@ async def help_cmd(client, message):
     "➢ <b>/ig [Video URL]</b> - Download Instagram Reels / Posts.\n"
     "   - Example: <code>/ig https://www.instagram.com/reel/xyz/</code>\n"
     "   - Note: Private or 18+ content cannot be downloaded.\n\n"
+
+    "➢ <b>/tt [Video URL]</b> - Download a TikTok video.\n"
+    "   - Example: <code>/tt https://www.tiktok.com/@username/video/1234567890123456789</code>\n"
 
     "➢ <b>/sp [Track URL]</b> - Download a Spotify track.\n"
     "   - Example: <code>/sp https://open.spotify.com/track/7ouBSPZKQpm7zQz2leJXta</code>\n\n"
