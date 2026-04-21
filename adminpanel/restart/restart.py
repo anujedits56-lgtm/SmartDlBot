@@ -16,12 +16,12 @@ def setup_restart_handler(app: Client):
                 reply_markup=InlineKeyboardMarkup(
                     [
                         [
-                            InlineKeyboardButton("👨🏼‍💻 Developer", url='https://t.me/abirxdhackz'),
-                            InlineKeyboardButton("🤖 Other Bots", url="https://t.me/Modvip_rm")
+                            InlineKeyboardButton("👨🏼‍💻 Developer", url='https://t.me/anujedits76'),
+                            InlineKeyboardButton("🤖 Other Bots", url="https://t.me/anujeditbyak")
                         ],
                         [
-                            InlineKeyboardButton("🔗 Source Code", url="https://github.com/abirxdhack/RestartModule"),
-                            InlineKeyboardButton("⚙️ Update Channel", url="https://t.me/Modvip_rm")
+                            InlineKeyboardButton("🔗 Source Code", url="https://t.me/anujedits76"),
+                            InlineKeyboardButton("⚙️ Update Channel", url="https://t.me/anujeditbyak")
                         ]
                     ]
                 )
@@ -75,12 +75,12 @@ def setup_restart_handler(app: Client):
                 reply_markup=InlineKeyboardMarkup(
                     [
                         [
-                            InlineKeyboardButton("👨🏼‍💻 Developer", url='https://t.me/abirxdhackz'),
-                            InlineKeyboardButton("🤖 Other Bots", url="https://t.me/Modvip_rm")
+                            InlineKeyboardButton("👨🏼‍💻 Developer", url='https://t.me/anujedits76'),
+                            InlineKeyboardButton("🤖 Other Bots", url="https://t.me/anujeditbyak")
                         ],
                         [
-                            InlineKeyboardButton("🔗 Source Code", url="https://github.com/abirxdhack/RestartModule"),
-                            InlineKeyboardButton("⚙️ Update Channel", url="https://t.me/Modvip_rm")
+                            InlineKeyboardButton("🔗 Source Code", url="https://t.me/anujedits76"),
+                            InlineKeyboardButton("⚙️ Update Channel", url="https://t.me/anujeditbyak")
                         ]
                     ]
                 )
