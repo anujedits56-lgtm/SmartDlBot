@@ -1,16 +1,15 @@
-# Base image
 FROM python:3.10-slim
 
 WORKDIR /app
 
-# Install system dependencies + Node.js
+# Install dependencies + latest Node.js
 RUN apt-get update && apt-get install -y \
     ffmpeg \
     curl \
     gcc \
     g++ \
-    nodejs \
-    npm \
+    && curl -fsSL https://deb.nodesource.com/setup_18.x | bash - \
+    && apt-get install -y nodejs \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
